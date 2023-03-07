@@ -2,4 +2,4 @@ create or replace package pkg_data_migration IS
         procedure insert_order_details;
         procedure insert_supplier_details;
         procedure insert_invoice_details;
-    end pkg_data_migration;
+end pkg_data_migration;
