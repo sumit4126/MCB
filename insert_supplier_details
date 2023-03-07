@@ -24,7 +24,7 @@ FROM
     "A1"."ORDER_REF" NOT LIKE '%-%')
 loop
      INSERT INTO XXBCM_SUPPLIER_MGT (
-			  SUPPLIER_NAME
+	      SUPPLIER_NAME
              ,SUPP_CONTACT_NAME
              ,SUPP_ADDRESS
              ,SUPP_CONTACT_NUMBER
