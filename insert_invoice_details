@@ -1,0 +1,49 @@
+Create or replace procedure insert_invoice_details as  
+begin
+for c_rac in (SELECT
+    "A1"."ORDER_REF"           "ORDER_REF",
+    "A1"."ORDER_DATE"          "ORDER_DATE",
+    "A1"."SUPPLIER_NAME"       "SUPPLIER_NAME",
+    "A1"."SUPP_CONTACT_NAME"   "SUPP_CONTACT_NAME",
+    "A1"."SUPP_ADDRESS"        "SUPP_ADDRESS",
+    "A1"."SUPP_CONTACT_NUMBER" "SUPP_CONTACT_NUMBER",
+    "A1"."SUPP_EMAIL"          "SUPP_EMAIL",
+    "A1"."ORDER_TOTAL_AMOUNT"  "ORDER_TOTAL_AMOUNT",
+    "A1"."ORDER_DESCRIPTION"   "ORDER_DESCRIPTION",
+    "A1"."ORDER_STATUS"        "ORDER_STATUS",
+    "A1"."ORDER_LINE_AMOUNT"   "ORDER_LINE_AMOUNT",
+    "A1"."INVOICE_REFERENCE"   "INVOICE_REFERENCE",
+    "A1"."INVOICE_DATE"        "INVOICE_DATE",
+    "A1"."INVOICE_STATUS"      "INVOICE_STATUS",
+    "A1"."INVOICE_HOLD_REASON" "INVOICE_HOLD_REASON",
+    "A1"."INVOICE_AMOUNT"      "INVOICE_AMOUNT",
+    "A1"."INVOICE_DESCRIPTION" "INVOICE_DESCRIPTION"
+FROM
+    "APPS"."XXBCM_ORDER_MGT" "A1"
+WHERE
+    "A1"."ORDER_REF" LIKE '%-%')
+loop
+     INSERT INTO XXBCM_INVOICE_MGT
+             (INVOICE_NUMBER
+             ,INVOICE_DATE
+             ,INVOICE_STATUS
+             ,INVOICE_HOLD_REASON
+             ,INVOICE_AMOUNT
+			 ,INVOICE_DESCRIPTION
+			 ,SUPPLIER_NAME
+             )
+     VALUES
+             (c_rac.INVOICE_REFERENCE,
+			 c_rac.INVOICE_DATE,
+			 c_rac.INVOICE_STATUS,
+			 c_rac.INVOICE_HOLD_REASON,
+			 c_rac.INVOICE_AMOUNT,
+			 c_rac.INVOICE_DESCRIPTION,
+			 c_rac.SUPPLIER_NAME
+             );
+end loop;
+commit;
+EXCEPTION
+	when others THEN
+	rollback;
+end;
