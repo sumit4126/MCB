@@ -44,6 +44,6 @@ loop
 end loop;
 commit;
 EXCEPTION
-	when others THEN
-	rollback;
+when others THEN
+rollback;
 end;
