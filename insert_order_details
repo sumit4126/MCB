@@ -27,7 +27,7 @@ WHERE
 loop
      INSERT INTO XXBCM_ORDER_HEADERS_MGT
              (ORDER_HEADER_ID
-			 ,PO_NUMBER
+		 ,PO_NUMBER
              ,ORDER_DATE
              ,SUPPLIER_NAME
              ,ORDER_TOTAL_AMOUNT
