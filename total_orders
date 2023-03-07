@@ -1,0 +1,7 @@
+ SELECT
+    "A1"."SUPPLIER_NAME"            "Supplier Name",
+    "A1"."SUPP_CONTACT_NAME"       "Supplier Contact Name",
+    "A1"."SUPP_CONTACT_NUMBER"        "Supplier Contact No.",
+    (select count("A4"."PO_NUMBER") from "APPS"."XXBCM_ORDER_HEADERS_MGT" "A4") "Total Orders"
+FROM
+    "APPS"."XXBCM_SUPPLIER_MGT" "A1"
