@@ -29,8 +29,8 @@ loop
              ,INVOICE_STATUS
              ,INVOICE_HOLD_REASON
              ,INVOICE_AMOUNT
-			 ,INVOICE_DESCRIPTION
-			 ,SUPPLIER_NAME
+             ,INVOICE_DESCRIPTION
+	     ,SUPPLIER_NAME
              )
      VALUES
              (c_rac.INVOICE_REFERENCE,
