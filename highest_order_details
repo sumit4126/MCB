@@ -1,0 +1,31 @@
+Select order_reference,
+order_date,
+SUPPLIER_NAME,
+ORDER_TOTAL_AMOUNT,
+ORDER_STATUS,
+INVOICE_REFERENCE from (
+Select order_reference,
+order_date,
+SUPPLIER_NAME,
+ORDER_TOTAL_AMOUNT,
+ORDER_STATUS,
+INVOICE_REFERENCE,
+rownum cnt
+from (
+Select 
+regexp_replace(order_ref, '[^0-9]', '')  order_reference,
+to_char(to_date(order_date,'DD-MM-YYYY'), 'MONTH DD,YYYY') order_date ,
+UPPER (SUPPLIER_NAME)  SUPPLIER_NAME,
+SUM(REPLACE(ORDER_TOTAL_AMOUNT,',','')) ORDER_TOTAL_AMOUNT,
+ORDER_STATUS,
+LISTAGG(INVOICE_REFERENCE,',') WITHIN GROUP (ORDER BY ORDER_TOTAL_AMOUNT) INVOICE_REFERENCE
+from 
+XXBCM_ORDER_MGT
+where ORDER_TOTAL_AMOUNT is not null
+GROUP BY 
+order_ref,order_date,
+SUPPLIER_NAME,ORDER_STATUS,ORDER_TOTAL_AMOUNT,INVOICE_REFERENCE
+ORDER BY ORDER_TOTAL_AMOUNT DESC
+)
+)
+where cnt = 3;
