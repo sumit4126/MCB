@@ -1,0 +1,14 @@
+SELECT
+    ltrim(REGEXP_REPLACE("A1"."ORDER_REF", '\D'), '0')            "Order Reference",
+    "A1"."ORDER_DATE"       "Order Period",
+    InitCap("A1"."SUPPLIER_NAME") "Supplier Name",
+     REPLACE("A1"."ORDER_TOTAL_AMOUNT", ',', '') "Order Total Amount",
+    "A1"."ORDER_STATUS"         "Order Status",
+    "A2"."INVOICE_NUMBER"    "Invoice Reference", 
+    "A2"."INVOICE_AMOUNT"       "Invoice Total Amount"
+FROM
+    "APPS"."XXBCM_ORDER_MGT" "A1",
+    "APPS"."XXBCM_ORDER_LINES_MGT" "A2"
+WHERE
+ "A1"."ORDER_REF" NOT LIKE '%-%'  
+ AND "A2"."PO_NUMBER" = substr("A1"."ORDER_REF", 1, instr("A1"."ORDER_REF", '-') -1)
