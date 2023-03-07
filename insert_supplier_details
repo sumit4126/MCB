@@ -1,0 +1,45 @@
+Create or replace procedure insert_supplier_details as  
+begin
+for c_rac in (SELECT
+    "A1"."ORDER_REF"           "ORDER_REF",
+    "A1"."ORDER_DATE"          "ORDER_DATE",
+    "A1"."SUPPLIER_NAME"       "SUPPLIER_NAME",
+    "A1"."SUPP_CONTACT_NAME"   "SUPP_CONTACT_NAME",
+    "A1"."SUPP_ADDRESS"        "SUPP_ADDRESS",
+    "A1"."SUPP_CONTACT_NUMBER" "SUPP_CONTACT_NUMBER",
+    "A1"."SUPP_EMAIL"          "SUPP_EMAIL",
+    "A1"."ORDER_TOTAL_AMOUNT"  "ORDER_TOTAL_AMOUNT",
+    "A1"."ORDER_DESCRIPTION"   "ORDER_DESCRIPTION",
+    "A1"."ORDER_STATUS"        "ORDER_STATUS",
+    "A1"."ORDER_LINE_AMOUNT"   "ORDER_LINE_AMOUNT",
+    "A1"."INVOICE_REFERENCE"   "INVOICE_REFERENCE",
+    "A1"."INVOICE_DATE"        "INVOICE_DATE",
+    "A1"."INVOICE_STATUS"      "INVOICE_STATUS",
+    "A1"."INVOICE_HOLD_REASON" "INVOICE_HOLD_REASON",
+    "A1"."INVOICE_AMOUNT"      "INVOICE_AMOUNT",
+    "A1"."INVOICE_DESCRIPTION" "INVOICE_DESCRIPTION"
+FROM
+    "APPS"."XXBCM_ORDER_MGT" "A1"
+	WHERE
+    "A1"."ORDER_REF" NOT LIKE '%-%')
+loop
+     INSERT INTO XXBCM_SUPPLIER_MGT (
+			  SUPPLIER_NAME
+             ,SUPP_CONTACT_NAME
+             ,SUPP_ADDRESS
+             ,SUPP_CONTACT_NUMBER
+             ,SUPP_EMAIL
+             )
+     VALUES (
+			 c_rac.SUPPLIER_NAME,
+			 c_rac.SUPP_CONTACT_NAME,
+			 c_rac.SUPP_ADDRESS,
+			 c_rac.SUPP_CONTACT_NUMBER,
+			 c_rac.SUPP_EMAIL
+             );
+end loop;
+commit;
+EXCEPTION
+	when others THEN
+	rollback;
+end;
